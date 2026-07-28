@@ -1,0 +1,26 @@
+name: Live site smoke test
+
+on:
+  schedule:
+    - cron: "41 6 * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/live-smoke.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify GitHub Pages deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          body="$(curl --fail --silent --show-error --location --retry 3 --max-time 30 https://hr185882-creator.github.io/aurora-grid-grindwire-site/)"
+          test -n "$body"
+          grep -Eqi "AURORA|GrindWire" <<<"$body"
+          echo "GitHub Pages endpoint returned expected project identity."
