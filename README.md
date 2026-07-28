@@ -1,142 +1,72 @@
-# aurora-grid-grindwire-site
+# AURORA GRID OS / GrindWire
 
-Live site: https://hr185882-creator.github.io/aurora-grid-grindwire-site/
+A decision-intelligence system for evidence verification, adversarial evaluation, constraint-first forecasting, scenario analysis, risk calibration, and auditable decision support.
 
-Products: https://hr185882-creator.github.io/aurora-grid-grindwire-site/#products
+## Canonical links
 
-Checkout / product intake: https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html
+- Live product site: https://hr185882-creator.github.io/aurora-grid-grindwire-site/
+- Product overview: https://hr185882-creator.github.io/aurora-grid-grindwire-site/#products
+- Forecast portfolio: https://hr185882-creator.github.io/aurora-grid-grindwire-site/#portfolio
+- Product intake: https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html
+- GitHub profile: https://github.com/hr185882-creator
+- AURORA Learning Platform: https://github.com/hr185882-creator/aurora-learning-platform
+- Inflection Point Research: https://github.com/hr185882-creator/inflection-point-research
+- AURORA LIVE / Intel Tripwire: https://github.com/hr185882-creator/intel-tripwire
 
-Forecast Portfolio: https://hr185882-creator.github.io/aurora-grid-grindwire-site/#portfolio
+## What the system does
 
-Premium decision-intelligence website for AURORA GRID / GrindWire: productized decision briefs, source audits, constraint forecasts, red-team attacks, forecast audits, live watches, custom intelligence-system buildouts, and advisory retainers.
+AURORA GRID converts noisy evidence and uncertain conditions into a structured analytical record:
 
-## AURORA GRID / GrindWire
+1. Detect what changed and separate signal from noise.
+2. Trace source provenance and independent corroboration.
+3. Classify facts, inferences, forecasts, speculation, and unverified claims.
+4. Test the strongest contrary case and explicit falsifiers.
+5. Identify the binding constraint, gate state, and activation trigger.
+6. Route the result into a defensible action state.
+7. Preserve the evidence basis and revision conditions.
 
-Decision intelligence for structural turning points.
+## Canonical workflow
 
-AURORA GRID / GrindWire turns signals, evidence, pressure points, and structural shifts into decision-ready analysis.
+`SCOUT -> SOURCEGRID -> K-ALIGN -> IPR -> BLACKGLASS -> CRF -> COMMAND -> AURORA GRID -> RECORD LOCK`
 
-The site presents the framework, premium product ladder, checkout/product-intake layer, forecast portfolio, live-test structure, forecast audit discipline, and Hall of Record candidates.
+## Core modules
 
-## Purpose
+- **SCOUT** - signal intake, anomalies, and investigative questions
+- **SOURCEGRID** - provenance mapping and source-contamination control
+- **K-ALIGN** - claim decomposition, evidence alignment, and adjudication
+- **IPR** - structural and inflection-point analysis
+- **BLACKGLASS** - adversarial evaluation and thesis attack
+- **CRF** - constraint-first forecasting, gate logic, and trigger mapping
+- **AAIK** - risk governor, evidence haircuts, and action thresholds
+- **COMMAND** - competing-frame arbitration and action routing
+- **RECORD LOCK** - reproducible evidence, assumptions, probabilities, and revision history
 
-This website is a sales and credibility site for AURORA GRID products and advisory services.
+## Application areas
 
-It is built for founders, analysts, creators, researchers, traders, sports bettors, consultants, and decision-makers who need structured judgment under uncertainty.
+- AI output evaluation and model-behavior quality assurance
+- Adversarial testing and red-team methodology
+- Strategic risk and threat analysis
+- OSINT and source-chain verification
+- Scenario analysis and forecasting
+- Technical research, decision memos, and executive reporting
+- Continuous monitoring and regression evaluation
 
-## Product Ladder
+## Verification standard
 
-Entry products:
+No forecast is treated as fully verified without both:
 
-- K-ALIGN Claim Check — $99
-- AURORA Quick Decision Memo — $149
-- BLACKGLASS Thesis Attack — $249
+1. A timestamped original forecast record.
+2. An official or high-quality outcome source.
 
-Core decision products:
+Unresolved cases remain explicitly labeled as candidates, inferences, audits, or live tests rather than being promoted into verified claims.
 
-- AURORA GRID Decision Brief — $299
-- CRF Constraint Forecast — $349
-- Forecast & Scenario Analysis — $499
+## Current status
 
-Premium proof and system products:
-
-- Forecast Portfolio Audit — $750
-- Decision-System Buildout — $1,500-$3,500
-- Live Situation Watch — $1,000-$2,500/month
-
-High-ticket advisory:
-
-- AURORA GRID Advisory Retainer — $3,000-$7,500/month
-- Custom Intelligence OS Setup — $5,000-$15,000
-
-Learning products:
-
-- AURORA Template Pack — $49-$99
-- AURORA GRID Field Course — $299-$499
-- Forecasting & Source Discipline Cohort — $999-$1,500
-
-Pricing posture: the main conversion zone is $299-$499. The $99 offer is an entry product only. Buildouts and retainers are premium products.
-
-## Checkout Layer
-
-The repository now includes `checkout.html`.
-
-Current checkout mode: product-specific intake. Each product has product-specific WhatsApp and email request links. This avoids fake payment URLs while still giving buyers a direct route to scope, book, and purchase.
-
-Payment-provider setup still required for real card checkout. Once Stripe, Gumroad, Lemon Squeezy, Calendly, or another provider is connected, replace the current intake links with real product checkout URLs.
-
-## Framework
-
-AURORA GRID uses several layers:
-
-- SCOUT — signal intake
-- SOURCEGRID — source-packet architecture
-- K-ALIGN — source audit and claim classification
-- CRF — constraint forecasting
-- BLACKGLASS — red-team critique
-- COMMAND — action-state routing
-
-Outputs are designed to answer:
-
-- What changed?
-- Why does it matter?
-- What does it force next?
-- What would prove it wrong?
-- What is the action state?
-
-## Forecast Verification Standard
-
-No forecast is claimed as fully verified unless both of the following are attached:
-
-1. Timestamped forecast text or screenshot
-2. Official or high-quality outcome source
-
-Until both are present, cases remain labeled as:
-
-- Strong Verified Candidate
-- Strong Inference Case
-- Forecast Audit
-- Medium / Needs Narrowing
-- Live Test
-
-The Poland Javelins case is featured in the Hall of Record as an audit-packet-attached Hall of Record candidate, with timestamp screenshot received and official DSCA outcome source linked. Keep claims bounded to the documented match.
+The repository contains a static product and portfolio site. Product-intake links are active; full payment-provider integration remains pending. Forecast records are being upgraded with timestamp and outcome-source packets.
 
 ## Contact
 
-Primary fast-contact path:
-
-"Message on WhatsApp" (https://wa.me/14808059305)
-
-Email fallback:
-
-Grindwireproject@gmail.com
-
-Suggested subject:
-
-AURORA GRID Product Request
-
-## Deployment
-
-This is a static website project.
-
-For Vercel deployment:
-
-vercel deploy --prod
-
-For GitHub Pages, serve the project from the repository root or configured static output directory.
-
-The build script copies both `index.html` and `checkout.html` into `dist/`.
-
-## Status
-
-Launch-ready static site with premium product ladder and product-specific checkout/intake page added.
-
-Pending production tasks:
-
-- Connect Stripe, Gumroad, Lemon Squeezy, Calendly, or another payment/scheduler provider
-- Replace product-intake links with real checkout or booking URLs
-- Connect the contact form to a real form backend, payment flow, or scheduler
-- Attach timestamp screenshots for forecast records
-- Attach official outcome-source packets
-- Connect custom domain if needed
-- Add delivery-time expectations and scope boundaries per product
+- Hasan Raza Kazmi
+- Email: kazmihasan624@gmail.com
+- Location: Sargodha, Pakistan
+- Work preference: fully remote
