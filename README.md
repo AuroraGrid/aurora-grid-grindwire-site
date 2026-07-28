@@ -2,13 +2,26 @@
 
 A decision-intelligence system for evidence verification, adversarial evaluation, constraint-first forecasting, scenario analysis, risk calibration, and auditable decision support.
 
-## Canonical links
+## Creator
 
-- Live product site: https://hr185882-creator.github.io/aurora-grid-grindwire-site/
+**Hasan Raza Kazmi** — AI Product Builder and Strategic Intelligence Analyst
+
+## Flagship live products
+
+- The Epstein Record: https://the-epstein-record.vercel.app/
+- RECORD LOCK: https://record-lock-platform.vercel.app/
+- The U.S.–Israel Policy Network: https://youname-it.vercel.app/
+- Research & Decision Systems Portfolio: https://hasan-research-systems.vercel.app/
+- AURORA Learning Platform: https://auroralearning.manus.space/
+
+## Canonical repositories and links
+
+- AURORA GRID live site: https://hr185882-creator.github.io/aurora-grid-grindwire-site/
 - Product overview: https://hr185882-creator.github.io/aurora-grid-grindwire-site/#products
 - Forecast portfolio: https://hr185882-creator.github.io/aurora-grid-grindwire-site/#portfolio
 - Product intake: https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html
 - GitHub profile: https://github.com/hr185882-creator
+- Recruiter-facing portfolio index: https://github.com/hr185882-creator/clia-portfolio
 - AURORA Learning Platform: https://github.com/hr185882-creator/aurora-learning-platform
 - Inflection Point Research: https://github.com/hr185882-creator/inflection-point-research
 - AURORA LIVE / Intel Tripwire: https://github.com/hr185882-creator/intel-tripwire
@@ -31,25 +44,34 @@ AURORA GRID converts noisy evidence and uncertain conditions into a structured a
 
 ## Core modules
 
-- **SCOUT** - signal intake, anomalies, and investigative questions
-- **SOURCEGRID** - provenance mapping and source-contamination control
-- **K-ALIGN** - claim decomposition, evidence alignment, and adjudication
-- **IPR** - structural and inflection-point analysis
-- **BLACKGLASS** - adversarial evaluation and thesis attack
-- **CRF** - constraint-first forecasting, gate logic, and trigger mapping
-- **AAIK** - risk governor, evidence haircuts, and action thresholds
-- **COMMAND** - competing-frame arbitration and action routing
-- **RECORD LOCK** - reproducible evidence, assumptions, probabilities, and revision history
+- **SCOUT** — signal intake, anomalies, and investigative questions
+- **SOURCEGRID** — provenance mapping and source-contamination control
+- **K-ALIGN** — claim decomposition, evidence alignment, and adjudication
+- **IPR** — structural and inflection-point analysis
+- **BLACKGLASS** — adversarial evaluation and thesis attack
+- **CRF** — constraint-first forecasting, gate logic, and trigger mapping
+- **AAIK** — risk governor, evidence haircuts, and action thresholds
+- **COMMAND** — competing-frame arbitration and action routing
+- **RECORD LOCK** — reproducible evidence, assumptions, probabilities, and revision history
 
 ## Application areas
 
 - AI output evaluation and model-behavior quality assurance
-- Adversarial testing and red-team methodology
-- Strategic risk and threat analysis
+- adversarial testing and red-team methodology
+- strategic risk and threat analysis
 - OSINT and source-chain verification
-- Scenario analysis and forecasting
-- Technical research, decision memos, and executive reporting
-- Continuous monitoring and regression evaluation
+- scenario analysis and forecasting
+- technical research, decision memos, and executive reporting
+- continuous monitoring and regression evaluation
+- public-interest research platforms and controlled evidence releases
+
+## Selected case studies
+
+- The Epstein Record — source-first public-record research platform
+- The U.S.–Israel Policy Network — policy and influence analysis
+- EU Chat Control Monitor — legislative and encryption-policy monitoring
+- The Russian JFK Dossier — historical intelligence and document analysis
+- Kristi Noem Cabinet-Stability Forecast — political-risk forecasting with prediction markets and explicit revision indicators
 
 ## Verification standard
 
@@ -62,11 +84,11 @@ Unresolved cases remain explicitly labeled as candidates, inferences, audits, or
 
 ## Current status
 
-The repository contains a static product and portfolio site. Product-intake links are active; full payment-provider integration remains pending. Forecast records are being upgraded with timestamp and outcome-source packets.
+The repository contains the core AURORA GRID product and portfolio site. The broader portfolio now includes multiple deployed research and verification products on Vercel. Forecast records continue to be upgraded with timestamp, source, and outcome packets.
 
 ## Contact
 
 - Hasan Raza Kazmi
 - Email: kazmihasan624@gmail.com
-- Location: Sargodha, Pakistan
+- Location: Pakistan
 - Work preference: fully remote
