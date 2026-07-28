@@ -1,5 +1,8 @@
 # AURORA GRID OS / GrindWire
 
+[![Quality checks](https://github.com/hr185882-creator/aurora-grid-grindwire-site/actions/workflows/quality.yml/badge.svg)](https://github.com/hr185882-creator/aurora-grid-grindwire-site/actions/workflows/quality.yml)
+[![Live site smoke test](https://github.com/hr185882-creator/aurora-grid-grindwire-site/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/hr185882-creator/aurora-grid-grindwire-site/actions/workflows/live-smoke.yml)
+
 A decision-intelligence system for evidence verification, adversarial evaluation, constraint-first forecasting, scenario analysis, risk calibration, and auditable decision support.
 
 ## Creator
@@ -84,7 +87,7 @@ Unresolved cases remain explicitly labeled as candidates, inferences, audits, or
 
 ## Current status
 
-The repository contains the core AURORA GRID product and portfolio site. The broader portfolio now includes multiple deployed research and verification products on Vercel. Forecast records continue to be upgraded with timestamp, source, and outcome packets.
+The repository contains the core AURORA GRID product and portfolio site. The broader portfolio includes multiple deployed research and verification products. Automated quality checks and scheduled live-endpoint monitoring are enabled for this repository.
 
 ## Contact
 
