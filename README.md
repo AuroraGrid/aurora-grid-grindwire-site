@@ -33,29 +33,37 @@ A decision-intelligence system for evidence verification, adversarial evaluation
 
 AURORA GRID converts noisy evidence and uncertain conditions into a structured analytical record:
 
-1. Detect what changed and separate signal from noise.
-2. Trace source provenance and independent corroboration.
-3. Classify facts, inferences, forecasts, speculation, and unverified claims.
-4. Test the strongest contrary case and explicit falsifiers.
-5. Identify the binding constraint, gate state, and activation trigger.
-6. Route the result into a defensible action state.
-7. Preserve the evidence basis and revision conditions.
+1. Route the question into the minimum sufficient analytical workflow.
+2. Detect what changed and separate signal from noise.
+3. Trace source provenance and independent corroboration.
+4. Classify facts, inferences, forecasts, speculation, and unverified claims.
+5. Test the strongest contrary case before finalizing the forecast.
+6. Identify the binding constraint, gate state, activation trigger, and probability.
+7. Route the result into a defensible action state.
+8. Attack the proposed action for sizing, timing, reversibility, and execution risk.
+9. Preserve the evidence basis, revisions, resolution, and error classification.
 
 ## Canonical workflow
 
-`SCOUT -> SOURCEGRID -> K-ALIGN -> IPR -> BLACKGLASS -> CRF -> COMMAND -> AURORA GRID -> RECORD LOCK`
+`ROUTER -> SCOUT -> SOURCEGRID -> K-ALIGN -> IPR -> BLACKGLASS-I -> CRF -> COMMAND -> BLACKGLASS-II -> RECORD LOCK`
+
+AAIK operates across the full pipeline as the evidence, instability, and exposure governor. Luna, Terra, and Sol are the cognitive control plane. AURORA GRID names the complete operating system rather than a stage inside its own chain.
+
+See [`docs/AURORA_GRID_V2_CANONICAL.md`](docs/AURORA_GRID_V2_CANONICAL.md) for the active specification.
 
 ## Core modules
 
-- **SCOUT** — signal intake, anomalies, and investigative questions
+- **ROUTER** — minimum-sufficient workflow selection
+- **SCOUT** — signal intake, anomalies, baselines, and investigative questions
 - **SOURCEGRID** — provenance mapping and source-contamination control
 - **K-ALIGN** — claim decomposition, evidence alignment, and adjudication
 - **IPR** — structural and inflection-point analysis
-- **BLACKGLASS** — adversarial evaluation and thesis attack
+- **BLACKGLASS-I** — independent thesis attack before forecast finalization
 - **CRF** — constraint-first forecasting, gate logic, and trigger mapping
-- **AAIK** — risk governor, evidence haircuts, and action thresholds
-- **COMMAND** — competing-frame arbitration and action routing
-- **RECORD LOCK** — reproducible evidence, assumptions, probabilities, and revision history
+- **AAIK** — cross-system risk governor, evidence haircuts, and action thresholds
+- **COMMAND** — probability, consequence, exposure, and action routing
+- **BLACKGLASS-II** — adversarial review of the proposed action
+- **RECORD LOCK** — append-only evidence, assumptions, probabilities, revisions, outcomes, and error history
 
 ## Application areas
 
@@ -89,9 +97,11 @@ Unresolved cases remain explicitly labeled as candidates, inferences, audits, or
 
 The repository contains the core AURORA GRID product and portfolio site. The broader portfolio includes multiple deployed research and verification products. Automated quality checks and scheduled live-endpoint monitoring are enabled for this repository.
 
+The v2 architecture is specified and partially implemented. Independent prospective benchmarking, external operator testing, and sufficient resolved forecasts remain required before claiming institution-grade empirical validation.
+
 ## Contact
 
 - Hasan Raza Kazmi
-- Email: kazmihasan624@gmail.com
+- Email: Grindwireproject@gmail.com
 - Location: Pakistan
 - Work preference: fully remote
