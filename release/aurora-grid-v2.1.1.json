@@ -104,6 +104,7 @@
     "core/IMPLEMENTATION_STATUS.md",
     "README.md",
     "CHANGELOG.md",
+    "release.html",
     "release/aurora-grid-v2.1.1.json"
   ],
   "validation_boundary": "The release synchronizes architecture and executable configuration. It does not establish institution-grade empirical superiority; independent prospective benchmarking, external operators and sufficient independently resolved forecasts remain required."
