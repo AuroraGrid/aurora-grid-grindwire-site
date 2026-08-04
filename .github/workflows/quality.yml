@@ -83,6 +83,27 @@ jobs:
           print('Validated JSON, HTML parsing, Python syntax, and local Markdown links.')
           PY
 
+      - name: Run AURORA GRID core tests
+        working-directory: core
+        run: python -m unittest -v test_core.py
+
+      - name: Verify AURORA GRID release manifest
+        working-directory: core
+        run: |
+          python aurora_grid_core.py version > /tmp/aurora-grid-version.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          runtime = json.loads(Path('/tmp/aurora-grid-version.json').read_text())
+          release = json.loads(Path('../release/aurora-grid-v2.1.1.json').read_text())
+          assert runtime['framework_version'] == release['release']['version'] == '2.1.1'
+          assert runtime['quick_modes'] == release['quick_modes']
+          assert runtime['gate_labels'] == release['gate_states']
+          assert runtime['aaik_states'] == sorted(release['aaik_states'])
+          print('Runtime and public release manifest are synchronized.')
+          PY
+
       - name: Set up Node.js
         if: ${{ hashFiles('package-lock.json') != '' }}
         uses: actions/setup-node@v4

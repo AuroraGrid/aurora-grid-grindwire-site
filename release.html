@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AURORA GRID OS v2.1.1 Release</title>
+  <meta name="description" content="Public release record for AURORA GRID OS v2.1.1, synchronized on August 4, 2026.">
+  <style>
+    :root{color-scheme:dark;--bg:#050a12;--panel:#0c1624;--text:#f4f7fb;--muted:#9ba7b7;--cyan:#00f0ff;--line:#243247}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#0b3540 0,transparent 34%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}.wrap{width:min(900px,calc(100% - 32px));margin:0 auto;padding:56px 0 80px}.badge{display:inline-block;border:1px solid #176a75;border-radius:999px;padding:6px 11px;color:#c9fbff;background:#08242a;font-size:12px;font-weight:800}.panel{margin-top:24px;padding:24px;border:1px solid var(--line);border-radius:20px;background:rgba(12,22,36,.88)}h1{font-size:clamp(40px,8vw,72px);line-height:.95;letter-spacing:-.05em;margin:20px 0}h2{margin-top:0}p,li{color:var(--muted)}code{color:#c9fbff}a{color:var(--cyan)}.grid{display:grid;gap:16px}@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <span class="badge">ACTIVE PUBLIC RELEASE</span>
+    <h1>AURORA GRID OS v2.1.1</h1>
+    <p>Released August 4, 2026. This patch synchronizes the public doctrine, executable runtime, deterministic tests, taxonomy labels, release manifest, changelog and outward-facing repository references.</p>
+
+    <section class="panel">
+      <h2>Configuration status</h2>
+      <ul>
+        <li>New forecast records default to <code>framework_version: 2.1.1</code>.</li>
+        <li>Historical v2.0 records remain valid and are not silently rewritten.</li>
+        <li>All 17 Quick Modes are registered.</li>
+        <li>Gate labels are locked to Blocked, Latent, Forming, Credible Pathway, Trigger-Ready and Activated.</li>
+        <li>AAIK states are locked to OFF, NORMAL and SPIKE.</li>
+      </ul>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Authoritative records</h2>
+        <p><a href="docs/AURORA_GRID_V2_CANONICAL.md">Canonical specification</a></p>
+        <p><a href="release/aurora-grid-v2.1.1.json">Machine-readable manifest</a></p>
+        <p><a href="CHANGELOG.md">Changelog</a></p>
+      </section>
+      <section class="panel">
+        <h2>Validation boundary</h2>
+        <p>This release establishes configuration synchronization, not institution-grade empirical superiority. Independent prospective benchmarking, external operators and sufficient independently resolved forecasts remain required.</p>
+      </section>
+    </div>
+
+    <p><a href="index.html">Return to AURORA GRID / GrindWire</a></p>
+  </main>
+</body>
+</html>

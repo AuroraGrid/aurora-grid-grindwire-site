@@ -6,17 +6,69 @@ import json
 import sqlite3
 import sys
 import uuid
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+CURRENT_FRAMEWORK_VERSION = "2.1.1"
+SUPPORTED_FRAMEWORK_VERSIONS = {"2.0", CURRENT_FRAMEWORK_VERSION}
+
 WORKFLOW = [
-    "ROUTER", "SCOUT", "SOURCEGRID", "K-ALIGN", "IPR",
-    "BLACKGLASS-I", "CRF", "COMMAND", "BLACKGLASS-II", "RECORD LOCK",
+    "ROUTER",
+    "SCOUT",
+    "SOURCEGRID",
+    "K-ALIGN",
+    "IPR",
+    "BLACKGLASS-I",
+    "CRF",
+    "COMMAND",
+    "BLACKGLASS-II",
+    "RECORD LOCK",
 ]
-ACTIONS = {"MONITOR", "WAIT", "INVESTIGATE", "PREPARE", "HEDGE", "TRADE", "PUBLISH", "ESCALATE", "REJECT"}
-GATES = {f"GATE-G{i}" for i in range(6)}
+
+QUICK_MODES = {
+    "Q01": "Full Pipeline",
+    "Q02": "Fast Signal Check",
+    "Q03": "Verification",
+    "Q04": "Source Audit",
+    "Q05": "Timeline Build",
+    "Q06": "Claim Decomposition",
+    "Q07": "Inflection Point",
+    "Q08": "Constraint Forecast",
+    "Q09": "Red-Team",
+    "Q10": "Attack",
+    "Q11": "Scenario/Wargame",
+    "Q12": "Network Power Map",
+    "Q13": "Risk Price",
+    "Q14": "Compare",
+    "Q15": "LIVE PASS",
+    "Q16": "Publishable Research",
+    "Q17": "Record Lock",
+}
+
+GATE_LABELS = {
+    "GATE-G0": "Blocked",
+    "GATE-G1": "Latent",
+    "GATE-G2": "Forming",
+    "GATE-G3": "Credible Pathway",
+    "GATE-G4": "Trigger-Ready",
+    "GATE-G5": "Activated",
+}
+GATES = set(GATE_LABELS)
+
+ACTIONS = {
+    "MONITOR",
+    "WAIT",
+    "REJECT",
+    "INVESTIGATE",
+    "HEDGE",
+    "TRADE",
+    "PUBLISH",
+    "ESCALATE",
+    "PREPARE",
+}
+AAIK_STATES = {"OFF", "NORMAL", "SPIKE"}
 RESOLUTIONS = {"RES-OPEN", "RES-HIT", "RES-PARTIAL", "RES-MISS", "RES-VOID"}
 
 
@@ -40,6 +92,28 @@ def validate_probability(value: int) -> int:
     return value
 
 
+def validate_framework_version(value: str) -> str:
+    if value not in SUPPORTED_FRAMEWORK_VERSIONS:
+        raise ValueError(
+            f"unsupported framework version: {value}; "
+            f"supported versions: {sorted(SUPPORTED_FRAMEWORK_VERSIONS)}"
+        )
+    return value
+
+
+def manifest() -> dict[str, Any]:
+    return {
+        "framework": "AURORA GRID OS",
+        "framework_version": CURRENT_FRAMEWORK_VERSION,
+        "workflow": WORKFLOW,
+        "quick_modes": QUICK_MODES,
+        "gate_labels": GATE_LABELS,
+        "aaik_states": sorted(AAIK_STATES),
+        "actions": sorted(ACTIONS),
+        "resolutions": sorted(RESOLUTIONS),
+    }
+
+
 @dataclass(frozen=True)
 class Forecast:
     question: str
@@ -51,10 +125,11 @@ class Forecast:
     trigger: str
     falsifier: str
     action: str = "MONITOR"
-    framework_version: str = "2.0"
+    framework_version: str = CURRENT_FRAMEWORK_VERSION
 
     def validate(self) -> None:
         validate_probability(self.probability)
+        validate_framework_version(self.framework_version)
         if self.gate not in GATES:
             raise ValueError(f"invalid gate: {self.gate}")
         if self.action not in ACTIONS:
@@ -156,7 +231,16 @@ class AuroraGrid:
             """INSERT INTO record_locks
             (id, created_at, record_type, record_id, payload, payload_hash, previous_hash, record_hash)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-            (lock_id, created_at, record_type, record_id, payload_text, payload_hash, previous_hash, record_hash),
+            (
+                lock_id,
+                created_at,
+                record_type,
+                record_id,
+                payload_text,
+                payload_hash,
+                previous_hash,
+                record_hash,
+            ),
         )
         return {**material, "record_hash": record_hash}
 
@@ -167,13 +251,27 @@ class AuroraGrid:
         payload = asdict(forecast)
         self.conn.execute(
             "INSERT INTO forecasts (id, created_at, payload, probability, gate, action) VALUES (?, ?, ?, ?, ?, ?)",
-            (forecast_id, created_at, canonical_json(payload), forecast.probability, forecast.gate, forecast.action),
+            (
+                forecast_id,
+                created_at,
+                canonical_json(payload),
+                forecast.probability,
+                forecast.gate,
+                forecast.action,
+            ),
         )
         self._lock("forecast", forecast_id, {"id": forecast_id, "created_at": created_at, **payload})
         self.conn.commit()
         return forecast_id
 
-    def revise_forecast(self, forecast_id: str, probability: int, gate: str, reason: str, evidence: list[str]) -> str:
+    def revise_forecast(
+        self,
+        forecast_id: str,
+        probability: int,
+        gate: str,
+        reason: str,
+        evidence: list[str],
+    ) -> str:
         validate_probability(probability)
         if gate not in GATES:
             raise ValueError(f"invalid gate: {gate}")
@@ -203,13 +301,29 @@ class AuroraGrid:
             """INSERT INTO revisions
             (id, forecast_id, created_at, old_probability, new_probability, old_gate, new_gate, reason, evidence)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (revision_id, forecast_id, created_at, current["probability"], probability, current["gate"], gate, reason, canonical_json(evidence)),
+            (
+                revision_id,
+                forecast_id,
+                created_at,
+                current["probability"],
+                probability,
+                current["gate"],
+                gate,
+                reason,
+                canonical_json(evidence),
+            ),
         )
         self._lock("revision", revision_id, payload)
         self.conn.commit()
         return revision_id
 
-    def resolve_forecast(self, forecast_id: str, outcome: str, resolution_source: str, notes: str = "") -> str:
+    def resolve_forecast(
+        self,
+        forecast_id: str,
+        outcome: str,
+        resolution_source: str,
+        notes: str = "",
+    ) -> str:
         if outcome not in RESOLUTIONS - {"RES-OPEN"}:
             raise ValueError(f"invalid final outcome: {outcome}")
         self.current_state(forecast_id)
@@ -239,16 +353,22 @@ class AuroraGrid:
             "SELECT * FROM revisions WHERE forecast_id = ? ORDER BY created_at DESC, rowid DESC LIMIT 1",
             (forecast_id,),
         ).fetchone()
-        resolution = self.conn.execute("SELECT outcome FROM resolutions WHERE forecast_id = ?", (forecast_id,)).fetchone()
-        count = self.conn.execute("SELECT COUNT(*) AS n FROM revisions WHERE forecast_id = ?", (forecast_id,)).fetchone()["n"]
+        resolution = self.conn.execute(
+            "SELECT outcome FROM resolutions WHERE forecast_id = ?", (forecast_id,)
+        ).fetchone()
+        count = self.conn.execute(
+            "SELECT COUNT(*) AS n FROM revisions WHERE forecast_id = ?", (forecast_id,)
+        ).fetchone()["n"]
         payload = json.loads(base["payload"])
         return {
             "id": forecast_id,
             "question": payload["question"],
+            "framework_version": payload.get("framework_version", "2.0"),
             "original_probability": base["probability"],
             "probability": latest["new_probability"] if latest else base["probability"],
             "original_gate": base["gate"],
             "gate": latest["new_gate"] if latest else base["gate"],
+            "gate_label": GATE_LABELS[latest["new_gate"] if latest else base["gate"]],
             "action": base["action"],
             "status": resolution["outcome"] if resolution else "RES-OPEN",
             "revision_count": count,
@@ -265,13 +385,22 @@ class AuroraGrid:
             if row["previous_hash"] != expected_previous:
                 errors.append(f"sequence {row['sequence']}: previous hash mismatch")
             material = {
-                "id": row["id"], "created_at": row["created_at"], "record_type": row["record_type"],
-                "record_id": row["record_id"], "payload_hash": row["payload_hash"], "previous_hash": row["previous_hash"],
+                "id": row["id"],
+                "created_at": row["created_at"],
+                "record_type": row["record_type"],
+                "record_id": row["record_id"],
+                "payload_hash": row["payload_hash"],
+                "previous_hash": row["previous_hash"],
             }
             if sha256_text(canonical_json(material)) != row["record_hash"]:
                 errors.append(f"sequence {row['sequence']}: record hash mismatch")
             expected_previous = row["record_hash"]
-        return {"valid": not errors, "entries": len(rows), "errors": errors}
+        return {
+            "framework_version": CURRENT_FRAMEWORK_VERSION,
+            "valid": not errors,
+            "entries": len(rows),
+            "errors": errors,
+        }
 
     def score(self) -> dict[str, Any]:
         rows = self.conn.execute(
@@ -281,27 +410,97 @@ class AuroraGrid:
             WHERE x.outcome IN ('RES-HIT','RES-MISS')"""
         ).fetchall()
         if not rows:
-            return {"n": 0, "initial_brier": None, "final_brier": None}
+            return {
+                "framework_version": CURRENT_FRAMEWORK_VERSION,
+                "n": 0,
+                "initial_brier": None,
+                "final_brier": None,
+            }
+
         def outcome_value(outcome: str) -> float:
             return 1.0 if outcome == "RES-HIT" else 0.0
-        initial = sum(((r["initial_probability"] / 100) - outcome_value(r["outcome"])) ** 2 for r in rows) / len(rows)
-        final = sum(((r["final_probability"] / 100) - outcome_value(r["outcome"])) ** 2 for r in rows) / len(rows)
-        return {"n": len(rows), "initial_brier": round(initial, 6), "final_brier": round(final, 6)}
+
+        initial = sum(
+            ((row["initial_probability"] / 100) - outcome_value(row["outcome"])) ** 2
+            for row in rows
+        ) / len(rows)
+        final = sum(
+            ((row["final_probability"] / 100) - outcome_value(row["outcome"])) ** 2
+            for row in rows
+        ) / len(rows)
+        return {
+            "framework_version": CURRENT_FRAMEWORK_VERSION,
+            "n": len(rows),
+            "initial_brier": round(initial, 6),
+            "final_brier": round(final, 6),
+        }
 
 
-def route(task: str, consequence: str = "medium", evidence_stability: str = "mixed") -> dict[str, Any]:
-    task = task.lower().strip()
-    consequence = consequence.lower().strip()
-    modes = ["Q02 Fast Signal Check"]
-    if any(word in task for word in ("verify", "true", "fake", "source")):
-        modes = ["Q03 Verification", "Q04 Source Audit"]
-    elif any(word in task for word in ("forecast", "probability", "predict")):
-        modes = ["Q08 Constraint Forecast", "Q09 Red-Team"]
-    elif any(word in task for word in ("publish", "report", "research")):
-        modes = ["Q16 Publishable Research", "Q17 Record Lock"]
-    if consequence == "high" or evidence_stability == "unstable":
-        modes = ["Q01 Full Pipeline", "Q09 Red-Team", "Q17 Record Lock"]
-    return {"modes": modes, "workflow": WORKFLOW, "governor": "AAIK"}
+def mode(code: str) -> str:
+    return f"{code} {QUICK_MODES[code]}"
+
+
+def route(
+    task: str,
+    consequence: str = "medium",
+    evidence_stability: str = "mixed",
+    aaik_state: str | None = None,
+) -> dict[str, Any]:
+    task_normalized = task.lower().strip()
+    consequence_normalized = consequence.lower().strip()
+    stability_normalized = evidence_stability.lower().strip()
+
+    if aaik_state is None:
+        resolved_aaik_state = (
+            "SPIKE"
+            if consequence_normalized == "high" or stability_normalized == "unstable"
+            else "NORMAL"
+        )
+    else:
+        resolved_aaik_state = aaik_state.upper().strip()
+        if resolved_aaik_state not in AAIK_STATES:
+            raise ValueError(f"invalid AAIK state: {aaik_state}")
+
+    modes = [mode("Q02")]
+    if any(word in task_normalized for word in ("verify", "true", "fake", "authentic")):
+        modes = [mode("Q03"), mode("Q04")]
+    elif any(word in task_normalized for word in ("source audit", "provenance", "source chain")):
+        modes = [mode("Q04")]
+    elif any(word in task_normalized for word in ("timeline", "chronology")):
+        modes = [mode("Q05")]
+    elif any(word in task_normalized for word in ("decompose", "claim decomposition")):
+        modes = [mode("Q06")]
+    elif any(word in task_normalized for word in ("inflection", "structural change")):
+        modes = [mode("Q07"), mode("Q09")]
+    elif any(word in task_normalized for word in ("forecast", "probability", "predict")):
+        modes = [mode("Q08"), mode("Q09")]
+    elif any(word in task_normalized for word in ("attack", "break this")):
+        modes = [mode("Q10")]
+    elif any(word in task_normalized for word in ("scenario", "wargame")):
+        modes = [mode("Q11")]
+    elif any(word in task_normalized for word in ("network power", "power map", "influence map")):
+        modes = [mode("Q12")]
+    elif any(word in task_normalized for word in ("risk price", "price the risk", "trade")):
+        modes = [mode("Q13")]
+    elif any(word in task_normalized for word in ("compare", " versus ", " vs ")):
+        modes = [mode("Q14")]
+    elif any(word in task_normalized for word in ("live pass", "update live", "monitor live")):
+        modes = [mode("Q15")]
+    elif any(word in task_normalized for word in ("publish", "report", "research")):
+        modes = [mode("Q16"), mode("Q17")]
+    elif any(word in task_normalized for word in ("record lock", "lock the record")):
+        modes = [mode("Q17")]
+
+    if resolved_aaik_state == "SPIKE":
+        modes = [mode("Q01"), mode("Q09"), mode("Q17")]
+
+    return {
+        "framework_version": CURRENT_FRAMEWORK_VERSION,
+        "modes": modes,
+        "workflow": WORKFLOW,
+        "governor": "AAIK",
+        "aaik_state": resolved_aaik_state,
+    }
 
 
 def demo(grid: AuroraGrid) -> dict[str, Any]:
@@ -317,21 +516,36 @@ def demo(grid: AuroraGrid) -> dict[str, Any]:
         action="MONITOR",
     )
     forecast_id = grid.register_forecast(forecast)
-    grid.revise_forecast(forecast_id, 70, "GATE-G4", "New official preparatory action", ["SRC-T1:demo-record"])
+    grid.revise_forecast(
+        forecast_id,
+        70,
+        "GATE-G4",
+        "New official preparatory action",
+        ["SRC-T1:demo-record"],
+    )
     state = grid.current_state(forecast_id)
-    return {"forecast": state, "chain": grid.verify_chain()}
+    return {
+        "framework_version": CURRENT_FRAMEWORK_VERSION,
+        "forecast": state,
+        "chain": grid.verify_chain(),
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="AURORA GRID v2 core ledger")
-    parser.add_argument("command", choices=["init", "demo", "verify", "route", "score"])
+    parser = argparse.ArgumentParser(description="AURORA GRID OS v2.1.1 core ledger")
+    parser.add_argument("command", choices=["init", "demo", "verify", "route", "score", "version"])
     parser.add_argument("--db", default="aurora.db")
     parser.add_argument("--task", default="verify a consequential claim")
     args = parser.parse_args(argv)
+
+    if args.command == "version":
+        print(json.dumps(manifest(), indent=2, sort_keys=True))
+        return 0
+
     grid = AuroraGrid(args.db)
     try:
         if args.command == "init":
-            result = {"initialized": args.db, "workflow": WORKFLOW}
+            result = {"initialized": args.db, **manifest()}
         elif args.command == "demo":
             result = demo(grid)
         elif args.command == "verify":
