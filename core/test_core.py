@@ -3,7 +3,16 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from aurora_grid_core import AuroraGrid, Forecast, route, validate_probability
+from aurora_grid_core import (
+    CURRENT_FRAMEWORK_VERSION,
+    GATE_LABELS,
+    QUICK_MODES,
+    AuroraGrid,
+    Forecast,
+    manifest,
+    route,
+    validate_probability,
+)
 
 
 class AuroraGridCoreTests(unittest.TestCase):
@@ -47,6 +56,8 @@ class AuroraGridCoreTests(unittest.TestCase):
         self.assertEqual(state["original_probability"], 60)
         self.assertEqual(state["probability"], 70)
         self.assertEqual(state["revision_count"], 1)
+        self.assertEqual(state["framework_version"], "2.1.1")
+        self.assertEqual(state["gate_label"], "Trigger-Ready")
         self.assertTrue(self.grid.verify_chain()["valid"])
 
     def test_multi_gate_jump_requires_multiple_evidence_items(self):
@@ -83,6 +94,7 @@ class AuroraGridCoreTests(unittest.TestCase):
             "SRC-T1:controlling-resolution-record",
         )
         score = self.grid.score()
+        self.assertEqual(score["framework_version"], "2.1.1")
         self.assertEqual(score["n"], 1)
         self.assertEqual(score["initial_brier"], 0.16)
         self.assertEqual(score["final_brier"], 0.09)
@@ -91,6 +103,30 @@ class AuroraGridCoreTests(unittest.TestCase):
         result = route("verify whether this source is authentic")
         self.assertIn("Q03 Verification", result["modes"])
         self.assertEqual(result["governor"], "AAIK")
+        self.assertEqual(result["aaik_state"], "NORMAL")
+        self.assertEqual(result["framework_version"], "2.1.1")
+
+    def test_spike_routing(self):
+        result = route(
+            "forecast a high-consequence event",
+            consequence="high",
+            evidence_stability="unstable",
+        )
+        self.assertEqual(result["aaik_state"], "SPIKE")
+        self.assertEqual(
+            result["modes"],
+            ["Q01 Full Pipeline", "Q09 Red-Team", "Q17 Record Lock"],
+        )
+
+    def test_v2_1_1_manifest_and_taxonomy(self):
+        release = manifest()
+        self.assertEqual(CURRENT_FRAMEWORK_VERSION, "2.1.1")
+        self.assertEqual(release["framework_version"], "2.1.1")
+        self.assertEqual(len(QUICK_MODES), 17)
+        self.assertEqual(QUICK_MODES["Q15"], "LIVE PASS")
+        self.assertEqual(GATE_LABELS["GATE-G2"], "Forming")
+        self.assertEqual(GATE_LABELS["GATE-G3"], "Credible Pathway")
+        self.assertEqual(GATE_LABELS["GATE-G4"], "Trigger-Ready")
 
 
 if __name__ == "__main__":
