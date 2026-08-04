@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "system": "AURORA GRID OS",
+  "release": {
+    "version": "2.1.1",
+    "release_date": "2026-08-04",
+    "status": "active",
+    "release_class": "configuration-synchronization patch",
+    "supersedes": "2.0",
+    "owner": "Hasan Raza Kazmi"
+  },
+  "compatibility": {
+    "new_record_default": "2.1.1",
+    "accepted_historical_record_versions": [
+      "2.0",
+      "2.1.1"
+    ],
+    "silent_rewrite_of_historical_records": false
+  },
+  "workflow": [
+    "ROUTER",
+    "SCOUT",
+    "SOURCEGRID",
+    "K-ALIGN",
+    "IPR",
+    "BLACKGLASS-I",
+    "CRF",
+    "COMMAND",
+    "BLACKGLASS-II",
+    "RECORD LOCK"
+  ],
+  "quick_modes": {
+    "Q01": "Full Pipeline",
+    "Q02": "Fast Signal Check",
+    "Q03": "Verification",
+    "Q04": "Source Audit",
+    "Q05": "Timeline Build",
+    "Q06": "Claim Decomposition",
+    "Q07": "Inflection Point",
+    "Q08": "Constraint Forecast",
+    "Q09": "Red-Team",
+    "Q10": "Attack",
+    "Q11": "Scenario/Wargame",
+    "Q12": "Network Power Map",
+    "Q13": "Risk Price",
+    "Q14": "Compare",
+    "Q15": "LIVE PASS",
+    "Q16": "Publishable Research",
+    "Q17": "Record Lock"
+  },
+  "output_modifiers": [
+    "For friends",
+    "Concise",
+    "Put it all together"
+  ],
+  "gate_states": {
+    "GATE-G0": "Blocked",
+    "GATE-G1": "Latent",
+    "GATE-G2": "Forming",
+    "GATE-G3": "Credible Pathway",
+    "GATE-G4": "Trigger-Ready",
+    "GATE-G5": "Activated"
+  },
+  "confidence_states": {
+    "CONF-G1": "Directional",
+    "CONF-G2": "High Confidence",
+    "CONF-G3": "Verified"
+  },
+  "source_tiers": {
+    "SRC-T1": "Primary records or raw data",
+    "SRC-T2": "Official institutions and formal records",
+    "SRC-T3": "Strong original reporting",
+    "SRC-T4": "Expert or secondary analysis",
+    "SRC-T5": "Social, rumor, opaque or contamination-prone material"
+  },
+  "aaik_states": [
+    "OFF",
+    "NORMAL",
+    "SPIKE"
+  ],
+  "decision_states": [
+    "MONITOR",
+    "WAIT",
+    "REJECT",
+    "INVESTIGATE",
+    "HEDGE",
+    "TRADE",
+    "PUBLISH",
+    "ESCALATE",
+    "PREPARE"
+  ],
+  "resolution_states": [
+    "RES-OPEN",
+    "RES-HIT",
+    "RES-PARTIAL",
+    "RES-MISS",
+    "RES-VOID"
+  ],
+  "release_surfaces": [
+    "docs/AURORA_GRID_V2_CANONICAL.md",
+    "core/aurora_grid_core.py",
+    "core/test_core.py",
+    "core/README.md",
+    "core/IMPLEMENTATION_STATUS.md",
+    "README.md",
+    "CHANGELOG.md",
+    "release/aurora-grid-v2.1.1.json"
+  ],
+  "validation_boundary": "The release synchronizes architecture and executable configuration. It does not establish institution-grade empirical superiority; independent prospective benchmarking, external operators and sufficient independently resolved forecasts remain required."
+}
