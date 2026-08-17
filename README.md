@@ -29,7 +29,7 @@ The goal is simple: better decisions with less hidden uncertainty.
   → [Live](https://hasan-research-systems.vercel.app/)
 
 - **Intel Tripwire** — Live monitoring of events, media, and infrastructure signals  
-  → [Repository](https://github.com/hr185882-creator/intel-tripwire)
+  → [Repository](https://github.com/AuroraGrid/intel-tripwire)
 
 ---
 
