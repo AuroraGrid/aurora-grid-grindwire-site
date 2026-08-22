@@ -15,6 +15,8 @@ It turns messy evidence into clear, reviewable records and supports careful fore
 - Tests the strongest opposing view before reaching a conclusion
 - Shows how confident we should be in a judgment
 - Keeps a clear history of what changed and why
+- Runs an executable cognitive control plane (Luna, Terra, Sol)
+- Applies AAIK evidence and exposure controls under high-consequence conditions
 
 The goal is simple: better decisions with less hidden uncertainty.
 
@@ -44,9 +46,9 @@ The goal is simple: better decisions with less hidden uncertainty.
 
 ## Current status
 
-Public release: **v2.1.1**
+Public release: **v2.2.0**
 
-The architecture and core methods are publicly documented. Independent testing and larger real-world evaluation are still ongoing.
+The architecture, core methods, cognitive control plane, and AAIK governor are publicly documented and executable. Independent testing and larger real-world evaluation are still ongoing.
 
 ---
 
@@ -68,3 +70,4 @@ For the full technical specification, architecture, and release notes, see:
 - [Canonical specification](docs/AURORA_GRID_V2_CANONICAL.md)
 - [Changelog](CHANGELOG.md)
 - [Core runtime](core/)
+- [Release manifest](release/aurora-grid-v2.2.0.json)

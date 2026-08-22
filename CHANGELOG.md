@@ -2,6 +2,37 @@
 
 All material public changes to AURORA GRID OS are recorded here. Internal doctrine changes that have not completed the release process must be labeled `UNRELEASED` and must not be presented publicly as the active version.
 
+## [2.2.0] — 2026-08-23
+
+### Release purpose
+
+Implemented enforceable cognitive control plane (Luna, Terra, Sol) and deeper AAIK governor logic beyond pure routing.
+
+### Added
+
+- executable Luna, Terra and Sol classes with deterministic methods;
+- `cognitive_pass` end-to-end helper;
+- `aaik_apply` governor helper;
+- AAIK SPIKE probability haircut (-10 points, clamped);
+- AAIK SPIKE pure T4/T5 foundation rejection;
+- AAIK SPIKE action downsizing (TRADE/PUBLISH/ESCALATE → HEDGE);
+- new CLI command `cognitive`;
+- expanded deterministic test suite covering the new surfaces.
+
+### Synchronized
+
+- runtime default for new forecast records set to `2.2.0`;
+- v2.0 and v2.1.1 retained as accepted historical record versions;
+- canonical, core documentation, implementation status, release manifest, README and changelog updated to the same version identifier.
+
+### Compatibility
+
+Existing v2.0 and v2.1.1 records remain valid historical records. They are not silently migrated or rewritten. New records default to v2.2.0.
+
+### Validation boundary
+
+This release makes the cognitive control plane and AAIK governor executable. It does not establish institution-grade empirical superiority. Independent prospective benchmarking, external operators and sufficient independently resolved forecasts remain required.
+
 ## [2.1.1] — 2026-08-04
 
 ### Release purpose

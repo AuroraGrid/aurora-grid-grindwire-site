@@ -1,21 +1,20 @@
 # AURORA GRID OS Core Implementation Status
 
-**Status:** v2.1.1 CONFIGURATION IMPLEMENTED  
+**Status:** v2.2.0 CONFIGURATION IMPLEMENTED  
 **Location:** `core/` within the canonical `aurora-grid-grindwire-site` repository  
-**Release date:** 2026-08-04  
-**Previous public runtime:** v2.0
+**Release date:** 2026-08-23  
+**Previous public runtime:** v2.1.1
 
-## v2.1.1 synchronization completed
+## v2.2.0 synchronization completed
 
-- runtime default changed from `2.0` to `2.1.1` for new forecast records;
-- v2.0 retained as an accepted historical record version;
-- machine-readable runtime manifest added through the `version` command;
-- locked Quick Mode registry expanded to all `Q01`–`Q17` identifiers;
-- gate labels synchronized to Blocked, Latent, Forming, Credible Pathway, Trigger-Ready and Activated;
-- AAIK states synchronized to `OFF`, `NORMAL` and `SPIKE`;
-- high-consequence or unstable-evidence work routed through Full Pipeline, Red-Team and Record Lock under `SPIKE`;
-- current-state, chain-verification and score outputs now identify the runtime version;
-- deterministic tests added for release metadata and locked taxonomies;
+- runtime default changed from `2.1.1` to `2.2.0` for new forecast records;
+- v2.0 and v2.1.1 retained as accepted historical record versions;
+- executable cognitive control plane added (Luna, Terra, Sol);
+- AAIK SPIKE now applies probability haircuts (-10), rejects pure T4/T5 foundations, and downsizes high-exposure actions;
+- `cognitive_pass` and `aaik_apply` helpers exposed;
+- new CLI command `cognitive`;
+- machine-readable runtime manifest updated;
+- deterministic tests expanded for Luna, Terra, Sol and AAIK governor behavior;
 - canonical doctrine, README, core documentation, changelog and release manifest synchronized.
 
 ## Existing implemented controls
@@ -31,28 +30,27 @@
 - final outcome resolution;
 - initial and final Brier scoring;
 - minimum-sufficient task router;
-- command-line initialization, demonstration, verification, routing, scoring and version output;
+- command-line initialization, demonstration, verification, routing, scoring, cognitive and version output;
 - deterministic unit tests;
 - Python 3.10–3.13 GitHub Actions matrix.
 
 ## Validation completed
 
-The v2.1.1 release candidate passed local validation for:
+The v2.2.0 release candidate includes tests for:
 
 - Python compilation;
-- eight deterministic unit tests;
-- forecast registration;
-- v2.1.1 version persistence;
+- forecast registration and version persistence;
 - forecast revision;
 - append-only trigger enforcement;
-- resolution;
-- initial and final Brier scoring;
-- standard routing;
-- AAIK `SPIKE` routing;
+- resolution and Brier scoring;
+- standard and SPIKE routing;
 - Quick Mode registry completeness;
 - gate-label synchronization;
 - full RECORD LOCK chain verification;
-- CLI version, demonstration and verification output.
+- Luna expansion;
+- Terra pure-T4/T5 detection and gap reporting;
+- Sol haircut and action downsizing under SPIKE;
+- cognitive_pass end-to-end.
 
 ## Configuration-management rule
 
