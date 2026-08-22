@@ -1,14 +1,14 @@
-# AURORA GRID OS v2.1.1 — Canonical Operating Architecture
+# AURORA GRID OS v2.2.0 — Canonical Operating Architecture
 
 **Status:** Active canonical specification  
-**Release date:** 2026-08-04  
+**Release date:** 2026-08-23  
 **System owner:** Hasan Raza Kazmi  
-**Release class:** Configuration-synchronization patch  
-**Supersedes:** AURORA GRID v2.0 public specification dated 2026-07-29
+**Release class:** Cognitive control plane + AAIK governor implementation  
+**Supersedes:** AURORA GRID v2.1.1 public specification dated 2026-08-04
 
 ## Release authority
 
-This document is the public source of truth for AURORA GRID OS v2.1.1. Runtime defaults, public descriptions, Quick Mode identifiers, gate labels, confidence labels, source tiers, AAIK states and release metadata must match this specification.
+This document is the public source of truth for AURORA GRID OS v2.2.0. Runtime defaults, public descriptions, Quick Mode identifiers, gate labels, confidence labels, source tiers, AAIK states, cognitive control plane and release metadata must match this specification.
 
 A doctrine change is not considered publicly released until all required configuration surfaces have been synchronized and verified:
 
@@ -25,10 +25,10 @@ A doctrine change is not considered publicly released until all required configu
 
 **AURORA GRID** is the complete decision-intelligence operating system, not a single stage inside its own workflow.
 
-- **Luna** expands hypotheses, weak signals, alternative frames, scenarios and second-order effects without outrunning evidence.
-- **Terra** verifies evidence, provenance, baselines, chronology, mechanisms, constraints and operational realism without mistaking an incomplete record for stable truth.
-- **Sol** synthesizes judgments, probabilities, priorities and actions while preserving unresolved uncertainty.
-- **AAIK** operates across the full system as the evidence, instability and exposure governor.
+- **Luna** expands hypotheses, weak signals, alternative frames, scenarios and second-order effects without outrunning evidence. (Executable in v2.2.0)
+- **Terra** verifies evidence, provenance, baselines, chronology, mechanisms, constraints and operational realism without mistaking an incomplete record for stable truth. (Executable in v2.2.0)
+- **Sol** synthesizes judgments, probabilities, priorities and actions while preserving unresolved uncertainty. (Executable in v2.2.0)
+- **AAIK** operates across the full system as the evidence, instability and exposure governor. Under SPIKE it applies probability haircuts, rejects pure T4/T5 foundations, and downsizes high-exposure actions. (Executable in v2.2.0)
 - **RECORD LOCK** is the append-only audit, revision, resolution and error-history layer.
 
 ## Governing priorities
@@ -178,7 +178,7 @@ Source tier does not equal truth. Each material source must also be evaluated fo
 
 - `OFF` — governor explicitly disabled for low-consequence internal work
 - `NORMAL` — standard evidence, uncertainty and exposure controls
-- `SPIKE` — evidence haircuts, wider uncertainty, smaller action sizing and rejection of T4/T5-only foundations for consequential claims
+- `SPIKE` — evidence haircuts (-10 probability points), wider uncertainty, smaller action sizing, and rejection of T4/T5-only foundations for consequential claims
 
 High-consequence or unstable-evidence tasks route to `Q01 Full Pipeline`, `Q09 Red-Team` and `Q17 Record Lock` under AAIK `SPIKE` unless a stricter domain control applies.
 
@@ -204,11 +204,12 @@ The calibration record must include hits, partials, misses, voids, false alarms,
 
 ## Runtime compatibility
 
-- New forecast records default to `framework_version: 2.1.1`.
-- Existing records created under v2.0 remain valid historical records and are not silently rewritten.
-- The runtime accepts v2.0 and v2.1.1 record versions for continuity.
+- New forecast records default to `framework_version: 2.2.0`.
+- Existing records created under v2.0 and v2.1.1 remain valid historical records and are not silently rewritten.
+- The runtime accepts v2.0, v2.1.1 and v2.2.0 record versions for continuity.
 - Current-state output exposes the originating framework version and canonical gate label.
 - The `version` command emits the machine-readable release manifest.
+- The `cognitive` command runs the full Luna → Terra → Sol pass.
 
 ## Public-description rule
 
@@ -239,4 +240,4 @@ A version is not “publicly synchronized” until these controls are complete. 
 
 ## Current validation boundary
 
-The architecture is specified and partially implemented. Independent prospective benchmarking, external operator testing and a sufficiently large independently resolved forecast set remain necessary before claiming institution-grade empirical validation or demonstrated superiority over established baselines.
+The architecture is specified and the cognitive control plane plus AAIK governor are now executable. Independent prospective benchmarking, external operator testing and a sufficiently large independently resolved forecast set remain necessary before claiming institution-grade empirical validation or demonstrated superiority over established baselines.
