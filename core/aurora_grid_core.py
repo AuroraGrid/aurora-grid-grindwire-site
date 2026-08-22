@@ -11,8 +11,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-CURRENT_FRAMEWORK_VERSION = "2.1.1"
-SUPPORTED_FRAMEWORK_VERSIONS = {"2.0", CURRENT_FRAMEWORK_VERSION}
+CURRENT_FRAMEWORK_VERSION = "2.2.0"
+SUPPORTED_FRAMEWORK_VERSIONS = {"2.0", "2.1.1", CURRENT_FRAMEWORK_VERSION}
 
 WORKFLOW = [
     "ROUTER",
@@ -71,6 +71,14 @@ ACTIONS = {
 AAIK_STATES = {"OFF", "NORMAL", "SPIKE"}
 RESOLUTIONS = {"RES-OPEN", "RES-HIT", "RES-PARTIAL", "RES-MISS", "RES-VOID"}
 
+SOURCE_TIERS = {
+    "SRC-T1": "primary records or raw data",
+    "SRC-T2": "official institutions and formal records",
+    "SRC-T3": "strong original reporting",
+    "SRC-T4": "expert or secondary analysis",
+    "SRC-T5": "social, rumor, opaque or contamination-prone material",
+}
+
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -111,7 +119,157 @@ def manifest() -> dict[str, Any]:
         "aaik_states": sorted(AAIK_STATES),
         "actions": sorted(ACTIONS),
         "resolutions": sorted(RESOLUTIONS),
+        "cognitive_control_plane": ["Luna", "Terra", "Sol"],
+        "source_tiers": SOURCE_TIERS,
     }
+
+
+# ---------------------------------------------------------------------------
+# Cognitive Control Plane (v2.2.0)
+# ---------------------------------------------------------------------------
+
+class Luna:
+    """Expands hypotheses, alternative frames, scenarios and second-order effects."""
+
+    @staticmethod
+    def expand(task: str, context: dict[str, Any] | None = None) -> dict[str, Any]:
+        task_l = task.lower().strip()
+        frames = [
+            "baseline continuation",
+            "accelerated pathway",
+            "blocked or reversed pathway",
+        ]
+        if any(w in task_l for w in ("war", "conflict", "attack", "military")):
+            frames.extend(["escalation cascade", "de-escalation window", "proxy displacement"])
+        if any(w in task_l for w in ("market", "price", "trade", "oil", "rate")):
+            frames.extend(["supply shock", "demand collapse", "policy intervention"])
+        second_order = [
+            "information cascade / narrative lock-in",
+            "authority reaction lag",
+            "hidden constraint activation",
+        ]
+        return {
+            "role": "Luna",
+            "task": task,
+            "alternative_frames": frames,
+            "second_order_effects": second_order,
+            "weak_signals_to_watch": ["source independence shift", "timing compression", "new primary record"],
+            "boundary": "does not outrun evidence",
+        }
+
+
+class Terra:
+    """Verifies evidence, provenance, baselines and operational realism."""
+
+    @staticmethod
+    def verify(evidence: list[str]) -> dict[str, Any]:
+        if not evidence:
+            return {
+                "role": "Terra",
+                "status": "INCOMPLETE",
+                "tiers_present": [],
+                "gaps": ["no evidence supplied"],
+                "pure_t4_t5": False,
+                "boundary": "incomplete record is not stable truth",
+            }
+        tiers = set()
+        for item in evidence:
+            item_u = item.upper()
+            for t in ("SRC-T1", "SRC-T2", "SRC-T3", "SRC-T4", "SRC-T5"):
+                if t in item_u:
+                    tiers.add(t)
+        pure_t4_t5 = bool(tiers) and tiers.issubset({"SRC-T4", "SRC-T5"})
+        gaps = []
+        if "SRC-T1" not in tiers and "SRC-T2" not in tiers:
+            gaps.append("no primary or official record")
+        if pure_t4_t5:
+            gaps.append("foundation is exclusively T4/T5")
+        return {
+            "role": "Terra",
+            "status": "GAPPED" if gaps else "ADEQUATE",
+            "tiers_present": sorted(tiers),
+            "gaps": gaps,
+            "pure_t4_t5": pure_t4_t5,
+            "boundary": "incomplete record is not stable truth",
+        }
+
+
+class Sol:
+    """Synthesizes judgments, probabilities, priorities and actions."""
+
+    @staticmethod
+    def synthesize(
+        luna: dict[str, Any],
+        terra: dict[str, Any],
+        probability: int,
+        action: str = "MONITOR",
+        aaik_state: str = "NORMAL",
+    ) -> dict[str, Any]:
+        validate_probability(probability)
+        adjusted = probability
+        notes = []
+        if aaik_state == "SPIKE":
+            if terra.get("pure_t4_t5"):
+                notes.append("AAIK SPIKE: pure T4/T5 foundation rejected for consequential claim")
+                adjusted = min(adjusted, 30)
+            else:
+                adjusted = max(5, min(95, adjusted - 10))
+                notes.append("AAIK SPIKE: probability haircut applied (-10)")
+            if action in {"TRADE", "PUBLISH", "ESCALATE"}:
+                action = "HEDGE"
+                notes.append("AAIK SPIKE: action downsized to HEDGE")
+        return {
+            "role": "Sol",
+            "probability": adjusted,
+            "original_probability": probability,
+            "action": action,
+            "aaik_state": aaik_state,
+            "luna_frames": luna.get("alternative_frames", []),
+            "terra_status": terra.get("status"),
+            "terra_gaps": terra.get("gaps", []),
+            "notes": notes,
+            "boundary": "preserves unresolved uncertainty",
+        }
+
+
+def cognitive_pass(
+    task: str,
+    evidence: list[str] | None = None,
+    probability: int = 50,
+    action: str = "MONITOR",
+    aaik_state: str = "NORMAL",
+) -> dict[str, Any]:
+    """Run the full cognitive control plane in order: Luna → Terra → Sol."""
+    luna_out = Luna.expand(task)
+    terra_out = Terra.verify(evidence or [])
+    sol_out = Sol.synthesize(luna_out, terra_out, probability, action, aaik_state)
+    return {
+        "framework_version": CURRENT_FRAMEWORK_VERSION,
+        "luna": luna_out,
+        "terra": terra_out,
+        "sol": sol_out,
+    }
+
+
+# ---------------------------------------------------------------------------
+# AAIK Governor helpers (v2.2.0)
+# ---------------------------------------------------------------------------
+
+def aaik_apply(
+    probability: int,
+    evidence: list[str],
+    action: str = "MONITOR",
+    aaik_state: str = "NORMAL",
+) -> dict[str, Any]:
+    """Apply AAIK evidence haircuts and exposure controls."""
+    terra = Terra.verify(evidence)
+    return Sol.synthesize(
+        Luna.expand("aaik application"),
+        terra,
+        probability,
+        action,
+        aaik_state,
+    )
 
 
 @dataclass(frozen=True)
@@ -500,6 +658,7 @@ def route(
         "workflow": WORKFLOW,
         "governor": "AAIK",
         "aaik_state": resolved_aaik_state,
+        "cognitive_control_plane": ["Luna", "Terra", "Sol"],
     }
 
 
@@ -528,18 +687,39 @@ def demo(grid: AuroraGrid) -> dict[str, Any]:
         "framework_version": CURRENT_FRAMEWORK_VERSION,
         "forecast": state,
         "chain": grid.verify_chain(),
+        "cognitive": cognitive_pass(
+            "Will the monitored pathway activate before the stated horizon?",
+            evidence=["SRC-T1:demo-record"],
+            probability=70,
+            aaik_state="NORMAL",
+        ),
     }
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="AURORA GRID OS v2.1.1 core ledger")
-    parser.add_argument("command", choices=["init", "demo", "verify", "route", "score", "version"])
+    parser = argparse.ArgumentParser(description="AURORA GRID OS v2.2.0 core ledger")
+    parser.add_argument(
+        "command",
+        choices=["init", "demo", "verify", "route", "score", "version", "cognitive"],
+    )
     parser.add_argument("--db", default="aurora.db")
     parser.add_argument("--task", default="verify a consequential claim")
+    parser.add_argument("--probability", type=int, default=50)
+    parser.add_argument("--aaik", default="NORMAL")
     args = parser.parse_args(argv)
 
     if args.command == "version":
         print(json.dumps(manifest(), indent=2, sort_keys=True))
+        return 0
+
+    if args.command == "cognitive":
+        result = cognitive_pass(
+            args.task,
+            evidence=[],
+            probability=args.probability,
+            aaik_state=args.aaik,
+        )
+        print(json.dumps(result, indent=2, sort_keys=True))
         return 0
 
     grid = AuroraGrid(args.db)

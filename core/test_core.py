@@ -9,6 +9,11 @@ from aurora_grid_core import (
     QUICK_MODES,
     AuroraGrid,
     Forecast,
+    Luna,
+    Sol,
+    Terra,
+    aaik_apply,
+    cognitive_pass,
     manifest,
     route,
     validate_probability,
@@ -56,7 +61,7 @@ class AuroraGridCoreTests(unittest.TestCase):
         self.assertEqual(state["original_probability"], 60)
         self.assertEqual(state["probability"], 70)
         self.assertEqual(state["revision_count"], 1)
-        self.assertEqual(state["framework_version"], "2.1.1")
+        self.assertEqual(state["framework_version"], "2.2.0")
         self.assertEqual(state["gate_label"], "Trigger-Ready")
         self.assertTrue(self.grid.verify_chain()["valid"])
 
@@ -94,7 +99,7 @@ class AuroraGridCoreTests(unittest.TestCase):
             "SRC-T1:controlling-resolution-record",
         )
         score = self.grid.score()
-        self.assertEqual(score["framework_version"], "2.1.1")
+        self.assertEqual(score["framework_version"], "2.2.0")
         self.assertEqual(score["n"], 1)
         self.assertEqual(score["initial_brier"], 0.16)
         self.assertEqual(score["final_brier"], 0.09)
@@ -104,7 +109,8 @@ class AuroraGridCoreTests(unittest.TestCase):
         self.assertIn("Q03 Verification", result["modes"])
         self.assertEqual(result["governor"], "AAIK")
         self.assertEqual(result["aaik_state"], "NORMAL")
-        self.assertEqual(result["framework_version"], "2.1.1")
+        self.assertEqual(result["framework_version"], "2.2.0")
+        self.assertEqual(result["cognitive_control_plane"], ["Luna", "Terra", "Sol"])
 
     def test_spike_routing(self):
         result = route(
@@ -118,15 +124,64 @@ class AuroraGridCoreTests(unittest.TestCase):
             ["Q01 Full Pipeline", "Q09 Red-Team", "Q17 Record Lock"],
         )
 
-    def test_v2_1_1_manifest_and_taxonomy(self):
+    def test_v2_2_0_manifest_and_taxonomy(self):
         release = manifest()
-        self.assertEqual(CURRENT_FRAMEWORK_VERSION, "2.1.1")
-        self.assertEqual(release["framework_version"], "2.1.1")
+        self.assertEqual(CURRENT_FRAMEWORK_VERSION, "2.2.0")
+        self.assertEqual(release["framework_version"], "2.2.0")
         self.assertEqual(len(QUICK_MODES), 17)
         self.assertEqual(QUICK_MODES["Q15"], "LIVE PASS")
         self.assertEqual(GATE_LABELS["GATE-G2"], "Forming")
         self.assertEqual(GATE_LABELS["GATE-G3"], "Credible Pathway")
         self.assertEqual(GATE_LABELS["GATE-G4"], "Trigger-Ready")
+        self.assertEqual(release["cognitive_control_plane"], ["Luna", "Terra", "Sol"])
+
+    def test_luna_expand(self):
+        out = Luna.expand("forecast a high-consequence conflict")
+        self.assertEqual(out["role"], "Luna")
+        self.assertIn("alternative_frames", out)
+        self.assertTrue(len(out["alternative_frames"]) >= 3)
+
+    def test_terra_verify_pure_t4_t5(self):
+        out = Terra.verify(["SRC-T4:expert-note", "SRC-T5:social-claim"])
+        self.assertTrue(out["pure_t4_t5"])
+        self.assertEqual(out["status"], "GAPPED")
+
+    def test_terra_verify_with_primary(self):
+        out = Terra.verify(["SRC-T1:official-record", "SRC-T3:reporting"])
+        self.assertFalse(out["pure_t4_t5"])
+        self.assertEqual(out["status"], "ADEQUATE")
+
+    def test_sol_spike_haircut(self):
+        luna = Luna.expand("test")
+        terra = Terra.verify(["SRC-T1:record"])
+        out = Sol.synthesize(luna, terra, 70, "MONITOR", "SPIKE")
+        self.assertEqual(out["probability"], 60)
+        self.assertIn("haircut", out["notes"][0].lower())
+
+    def test_sol_spike_rejects_pure_t4_t5(self):
+        luna = Luna.expand("test")
+        terra = Terra.verify(["SRC-T4:expert", "SRC-T5:rumor"])
+        out = Sol.synthesize(luna, terra, 80, "TRADE", "SPIKE")
+        self.assertLessEqual(out["probability"], 30)
+        self.assertEqual(out["action"], "HEDGE")
+
+    def test_cognitive_pass(self):
+        result = cognitive_pass(
+            "Will the pathway activate?",
+            evidence=["SRC-T1:record"],
+            probability=65,
+            aaik_state="NORMAL",
+        )
+        self.assertEqual(result["framework_version"], "2.2.0")
+        self.assertEqual(result["luna"]["role"], "Luna")
+        self.assertEqual(result["terra"]["role"], "Terra")
+        self.assertEqual(result["sol"]["role"], "Sol")
+
+    def test_aaik_apply(self):
+        out = aaik_apply(75, ["SRC-T1:primary"], "PUBLISH", "SPIKE")
+        self.assertEqual(out["original_probability"], 75)
+        self.assertEqual(out["probability"], 65)
+        self.assertEqual(out["action"], "HEDGE")
 
 
 if __name__ == "__main__":
