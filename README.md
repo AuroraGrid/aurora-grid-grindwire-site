@@ -56,7 +56,7 @@ The architecture, core methods, cognitive control plane, and AAIK governor are p
 
 **Hasan Raza Kazmi**  
 AI Product Builder & Strategic Intelligence Analyst  
-Pakistan · Fully remote
+global · remote
 
 Email: Grindwireproject@gmail.com  
 Portfolio: https://hasan-research-systems.vercel.app/
