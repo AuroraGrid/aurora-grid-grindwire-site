@@ -96,8 +96,8 @@ jobs:
           from pathlib import Path
 
           runtime = json.loads(Path('/tmp/aurora-grid-version.json').read_text())
-          release = json.loads(Path('../release/aurora-grid-v2.1.1.json').read_text())
-          assert runtime['framework_version'] == release['release']['version'] == '2.1.1'
+          release = json.loads(Path('../release/aurora-grid-v2.2.0.json').read_text())
+          assert runtime['framework_version'] == release['release']['version'] == '2.2.0'
           assert runtime['quick_modes'] == release['quick_modes']
           assert runtime['gate_labels'] == release['gate_states']
           assert runtime['aaik_states'] == sorted(release['aaik_states'])
