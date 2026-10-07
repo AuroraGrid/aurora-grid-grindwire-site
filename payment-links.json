@@ -1,55 +1,6 @@
 {
-  "provider_status": "pending",
-  "provider_note": "Real card-processing URLs must be created in Stripe, Gumroad, Lemon Squeezy, PayPal, or another provider and pasted into provider_payment_url.",
-  "products": [
-    {
-      "slug": "kalign-claim-check",
-      "name": "K-ALIGN Claim Check",
-      "price_usd": 99,
-      "public_checkout_intake_url": "https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html?product=kalign-claim-check",
-      "provider_payment_url": "PENDING"
-    },
-    {
-      "slug": "aurora-quick-decision-memo",
-      "name": "AURORA Quick Decision Memo",
-      "price_usd": 149,
-      "public_checkout_intake_url": "https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html?product=aurora-quick-decision-memo",
-      "provider_payment_url": "PENDING"
-    },
-    {
-      "slug": "blackglass-thesis-attack",
-      "name": "BLACKGLASS Thesis Attack",
-      "price_usd": 249,
-      "public_checkout_intake_url": "https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html?product=blackglass-thesis-attack",
-      "provider_payment_url": "PENDING"
-    },
-    {
-      "slug": "aurora-grid-decision-brief",
-      "name": "AURORA GRID Decision Brief",
-      "price_usd": 299,
-      "public_checkout_intake_url": "https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html?product=aurora-grid-decision-brief",
-      "provider_payment_url": "PENDING"
-    },
-    {
-      "slug": "crf-constraint-forecast",
-      "name": "CRF Constraint Forecast",
-      "price_usd": 349,
-      "public_checkout_intake_url": "https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html?product=crf-constraint-forecast",
-      "provider_payment_url": "PENDING"
-    },
-    {
-      "slug": "forecast-scenario-analysis",
-      "name": "Forecast & Scenario Analysis",
-      "price_usd": 499,
-      "public_checkout_intake_url": "https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html?product=forecast-scenario-analysis",
-      "provider_payment_url": "PENDING"
-    },
-    {
-      "slug": "forecast-portfolio-audit",
-      "name": "Forecast Portfolio Audit",
-      "price_usd": 750,
-      "public_checkout_intake_url": "https://hr185882-creator.github.io/aurora-grid-grindwire-site/checkout.html?product=forecast-portfolio-audit",
-      "provider_payment_url": "PENDING"
-    }
-  ]
+  "status": "RETIRED",
+  "note": "Legacy AURORA GRID / GrindWire pricing is not a current KAHRELUM offer.",
+  "canonical_pilot": "https://kahrelum.com/pilot",
+  "contact": "hasan@kahrelum.com"
 }
